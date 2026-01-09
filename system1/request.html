@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barangay 170 - Unified Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/design/style.css">
+  <script src="index.js"></script>
+  <style>
+     .btn-back {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .btn-back:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+        <div class="logo-section">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTDCuh4kIpAtR-QmjA1kTjE_8-HSd8LSt3Gw&s" alt="Logo" class="logo-img">
+          <div class="logo-text">
+            <h1>Barangay 170</h1>
+            <p>Flood Monitoring System</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <a href="../home/index.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Back to Portal
+          </a>
+        </div>
+      </div>
+
+    <!-- Main Grid -->
+    <div class="main-grid">
+      <!-- Left Column: Profile & Stats -->
+      <div>
+        <!-- Profile Card -->
+        <div class="card profile-card">
+          <h3 class="card-title">
+            <i class="fas fa-user"></i>
+            My Profile
+          </h3>
+          <div class="profile-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="profile-name">Juan Dela Cruz</div>
+          <div class="profile-email">juan.delacruz@email.com</div>
+          
+          <div class="profile-info">
+            <div class="profile-info-item">
+              <span class="profile-info-label">Contact</span>
+              <span class="profile-info-value">09123456789</span>
+            </div>
+            <div class="profile-info-item">
+              <span class="profile-info-label">Member Since</span>
+              <span class="profile-info-value">Jan 2025</span>
+            </div>
+            <div class="profile-info-item">
+              <span class="profile-info-label">Total Requests</span>
+              <span class="profile-info-value">5</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="card" style="margin-top: 20px;">
+          <h3 class="card-title">
+            <i class="fas fa-chart-bar"></i>
+            Quick Stats
+          </h3>
+          <div class="stats-grid">
+            <div class="stat-box">
+              <div class="stat-number" id="pendingCount">0</div>
+              <div class="stat-label">Pending</div>
+            </div>
+            <div class="stat-box" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+              <div class="stat-number" id="readyCount">0</div>
+              <div class="stat-label">Ready</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center Column: Submit Request -->
+      <div>
+        <div class="card">
+          <h3 class="card-title">
+            <i class="fas fa-file-alt"></i>
+            Submit New Request
+          </h3>
+
+          <div class="success-message" id="successMessage">
+            <i class="fas fa-check-circle"></i> Request submitted successfully!
+          </div>
+
+          <form id="requestForm">
+            <div class="form-group">
+              <label class="form-label">Request Type</label>
+              <select class="form-select" id="requestType" required>
+                <option value="">Select document type</option>
+                <option value="Barangay Clearance">Barangay Clearance</option>
+                <option value="Certificate of Residency">Certificate of Residency</option>
+                <option value="Certificate of Indigency">Certificate of Indigency</option>
+                <option value="Barangay ID">Barangay ID</option>
+                <option value="Business Permit">Business Permit</option>
+                <option value="Building Permit">Building Permit</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Priority Level</label>
+              <select class="form-select" id="priority" required>
+                <option value="">Select priority</option>
+                <option value="LOW">🟢 Low - Standard Processing</option>
+                <option value="MEDIUM">🟡 Medium - Moderate Urgency</option>
+                <option value="HIGH">🔴 High - Urgent</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Purpose of Request</label>
+              <textarea class="form-textarea" id="purpose" placeholder="Please describe the purpose of your request..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">
+              <i class="fas fa-paper-plane"></i> Submit Request
+            </button>
+          </form>
+        </div>
+        
+      </div>   
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

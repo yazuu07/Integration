@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barangay 170 - Unified Portal</title>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="../assets/design/style.css">
+
+  <!-- Inline CSS for new sections -->
+  <style>
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .news-item {
+      padding: 15px;
+      border-left: 4px solid #3b82f6;
+      background: #f9fafb;
+      border-radius: 8px;
+    }
+
+    .news-title {
+      margin: 0 0 6px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .news-text {
+      font-size: 14px;
+      color: #374151;
+    }
+
+    .news-date {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .info-box {
+      background: #eef2ff;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .info-box h4 {
+      margin-bottom: 10px;
+      color: #1e40af;
+    }
+
+    .info-box ul {
+      padding-left: 20px;
+      margin-bottom: 10px;
+    }
+
+    .info-box li {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .info-note {
+      font-size: 13px;
+      color: #4338ca;
+    }
+    .btn-back {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.btn-back:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+    
+  </style>
+
+  <script src="index.js"></script>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="logo-section">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTDCuh4kIpAtR-QmjA1kTjE_8-HSd8LSt3Gw&s" class="logo-img">
+        <div class="logo-text">
+          <h1>Barangay 170</h1>
+          <p>Document Request System</p>
+        </div>
+      </div>
+
+      <div class="user-section">
+        <div class="user-info">
+          <div class="user-name">Juan Dela Cruz</div>
+          <span class="user-badge">Resident</span>
+        </div>
+        <a class="btn-logout" href="../auth/login.php" style="text-decoration: none;">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+      </div>
+    </div>
+
+    <!-- MAIN GRID -->
+    <div class="main-grid">
+
+      <!-- LEFT COLUMN -->
+      <div>
+
+        <!-- NOTIFICATIONS -->
+        <div class="card profile-card">
+          <div class="notifications">
+
+            <div class="notification-item unread">
+              <i class="fas fa-bell notification-icon"></i>
+              <div>
+                <p>Your document request has been <strong>approved</strong>.</p>
+                <span>5 minutes ago</span>
+              </div>
+            </div>
+
+            <div class="notification-item">
+              <i class="fas fa-file-alt notification-icon"></i>
+              <div>
+                <p>New file is ready for download.</p>
+                <span>2 hours ago</span>
+              </div>
+            </div>
+
+            <div class="notification-item">
+              <i class="fas fa-exclamation-circle notification-icon warning"></i>
+              <div>
+                <p>Please complete your profile information.</p>
+                <span>Yesterday</span>
+              </div>
+            </div>
+
+            <div class="notification-item">
+              <i class="fas fa-check-circle notification-icon success"></i>
+              <div>
+                <p>Account verification successful.</p>
+                <span>Jan 6, 2026</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- NEWS & ARTICLES -->
+        <div class="card" style="margin-top:20px;">
+          <h3 class="card-title">
+            <i class="fas fa-newspaper"></i>
+            Barangay News & Announcements
+          </h3>
+
+          <div class="news-list">
+
+            <div class="news-item">
+              <h4 class="news-title">📢 Barangay Assembly Scheduled</h4>
+              <p class="news-text">
+                All residents are invited to attend the Barangay Assembly on
+                <strong>January 20, 2026</strong> at the Barangay Hall.
+              </p>
+              <span class="news-date">Posted: Jan 9, 2026</span>
+            </div>
+
+            <div class="news-item">
+              <h4 class="news-title">🌧️ Flood Monitoring System Update</h4>
+              <p class="news-text">
+                The flood monitoring dashboard is now active. Please monitor
+                alerts during heavy rainfall.
+              </p>
+              <span class="news-date">Posted: Jan 8, 2026</span>
+            </div>
+
+            <div class="news-item">
+              <h4 class="news-title">🆔 Barangay ID Processing</h4>
+              <p class="news-text">
+                Barangay ID applications are open Monday–Friday,
+                9:00 AM – 4:00 PM.
+              </p>
+              <span class="news-date">Posted: Jan 6, 2026</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- CENTER COLUMN -->
+      <div>
+
+        
+ 
+        <!-- Available Services -->
+        <div class="card" style="margin-top: 20px;">
+          <h3 class="card-title">
+            <i class="fas fa-th-large"></i>
+            Available Services
+          </h3>
+          <div class="services-grid">
+            <div class="service-card" onclick="window.location.href='../system1/request.html'" style="background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%); color: white;">
+              <div class="service-icon">📄</div>
+              <div class="service-name">Document Request</div>
+            </div>
+             <div class="service-card" onclick="window.location.href='../system2/dashboard.html'" style="background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%); color: white;">
+              <div class="service-icon">🌊</div>
+              <div class="service-name">Flood Monitoring</div>
+            </div>
+            <div class="service-card" onclick="window.location.href='../system3/new-report.html'" style="background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%); color: white;">
+              <div class="service-icon">❌</div>
+              <div class="service-name">File Problem Report</div>
+            </div>
+          </div>
+        </div>
+      </div>   
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

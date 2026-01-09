@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Report - Barangay 170</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f9fafb;
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .logo-text h1 {
+            color: #667eea;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .logo-text p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .btn-back {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .tabs {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab {
+            padding: 12px 24px;
+            border: none;
+            background: #f8f9fa;
+            color: #666;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .tab:hover {
+            background: #e9ecef;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title i {
+            color: #667eea;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .alert-status {
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .alert-status.safe {
+            background: #d1fae5;
+            border: 2px solid #10b981;
+        }
+
+        .alert-status.warning {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+        }
+
+        .alert-icon {
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .alert-content h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .alert-content p {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .btn-apply {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .btn-apply:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        #map {
+            height: 300px;
+            border-radius: 12px;
+            border: 2px solid #e0e0e0;
+            margin-bottom: 15px;
+        }
+
+        .coordinates-box {
+            background: #f8f9fa;
+            padding: 12px 16px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .coordinates-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+        }
+
+        .coordinates-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-left: 8px;
+        }
+
+        .coordinates-status {
+            color: #10b981;
+            font-weight: 600;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .upload-section {
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .upload-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .upload-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .btn-choose {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-choose:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .file-count {
+            font-size: 13px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .info-box {
+            background: #f0f9ff;
+            border-left: 4px solid #667eea;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .info-box p {
+            font-size: 13px;
+            color: #0369a1;
+            line-height: 1.6;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .map-instruction {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo-section {
+                justify-content: center;
+            }
+
+            .card {
+                padding: 15px;
+            }
+
+            .tab {
+                padding: 10px 16px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo-section">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTDCuh4kIpAtR-QmjA1kTjE_8-HSd8LSt3Gw&s" alt="Logo" class="logo-img">
+        <div class="logo-text">
+          <h1>Barangay 170</h1>
+          <p>Barangay Report Tracker System</p>
+        </div>
+      </div>
+      <a href="../home/index.html" class="btn-back">
+        <i class="fas fa-arrow-left"></i> Back to Portal
+      </a>
+    </div>
+    <!-- Main Grid -->
+    <div class="main-grid">
+      <!-- Left Column -->
+      <div>
+        <!-- Report Form Card -->
+        <div class="card">
+          <h3 class="card-title">
+            <i class="fas fa-file-alt"></i>
+            Submit New Report
+          </h3>
+
+          <form id="reportForm">
+            <div class="form-group">
+              <label class="form-label">Issue Title</label>
+              <input 
+                type="text" 
+                id="issueTitle" 
+                placeholder="Brief description of the issue"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select id="category" required>
+                <option value="">Select issue category</option>
+                <option value="health">Health & Medical</option>
+                <option value="fire">Fire & Safety</option>
+                <option value="water">Water & Utilities</option>
+                <option value="infrastructure">Infrastructure (Roads, Lights, Facilities)</option>
+                <option value="traffic">Traffic & Parking</option>
+                <option value="waste">Waste & Sanitation</option>
+                <option value="security">Security & Crime</option>
+                <option value="environment">Environment & Animals</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div id="departmentInfo" class="alert-status safe hidden">
+              <div class="alert-icon">✓</div>
+              <div class="alert-content">
+                <h3 id="departmentName">Department</h3>
+                <p>Team: <span id="responseTeam">Response Team</span></p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Priority Level</label>
+              <select id="priority" required>
+                <option value="">Select priority level</option>
+                <option value="low">Low - Minor inconvenience</option>
+                <option value="medium">Medium - Moderate impact</option>
+                <option value="high">High - Urgent attention needed</option>
+              </select>
+            </div>
+
+            <div id="prioritySuggestion" class="alert-status warning hidden">
+              <div class="alert-icon">⚠️</div>
+              <div class="alert-content" style="flex: 1;">
+                <h3>Suggested Priority: <span id="suggestedPriority">Medium</span></h3>
+                <p>Based on: <span id="suggestionCategory"></span></p>
+              </div>
+              <button type="button" id="applySuggestionBtn" class="btn-apply">
+                Apply
+              </button>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Description</label>
+              <textarea 
+                id="description" 
+                placeholder="Please provide detailed information about the issue..."
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Address</label>
+              <input 
+                type="text" 
+                id="address" 
+                placeholder="Street address or nearby landmark"
+                required
+              >
+            </div>
+
+            <button type="submit" class="btn-submit">
+              <i class="fas fa-paper-plane"></i> Submit Report
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div>
+        <!-- Map Card -->
+        <div class="card">
+          <h3 class="card-title">
+            <i class="fas fa-map-marker-alt"></i>
+            Location on Map
+          </h3>
+          <p class="map-instruction">Click on the map to select the exact location of the issue</p>
+          <div id="map"></div>
+          <div class="coordinates-box">
+            <span class="coordinates-label">Coordinates: <span class="coordinates-value" id="coordinates">14.676006, 121.043700</span></span>
+            <span class="coordinates-status">
+              <i class="fas fa-check-circle"></i> Set
+            </span>
+          </div>
+        </div>
+
+        <!-- Upload Photos Card -->
+        <div class="card">
+          <h3 class="card-title">
+            <i class="fas fa-images"></i>
+            Upload Photos <span style="font-weight: 400; color: #999; font-size: 14px;">(Optional)</span>
+          </h3>
+          <div class="upload-section">
+            <div class="upload-icon">📷</div>
+            <div class="upload-text">Upload photos of the issue</div>
+            <input type="file" id="photoUpload" accept="image/*" multiple style="display: none;">
+            <button type="button" class="btn-choose" onclick="document.getElementById('photoUpload').click()">
+              Choose Files
+            </button>
+            <div class="file-count" id="fileCount">No files selected</div>
+          </div>
+        </div>
+
+        <!-- Quick Info Card -->
+        <div class="card">
+          <h3 class="card-title">
+            <i class="fas fa-info-circle"></i>
+            Information
+          </h3>
+          <div class="info-box">
+            <p>
+              <strong>Setting the exact location</strong> helps response teams locate the issue quickly and allows you to track it on the map view. Be as specific as possible with your description to expedite resolution.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let map;
+    let marker;
+    let currentLat = 14.676006;
+    let currentLng = 121.043700;
+
+    function initMap() {
+      map = L.map('map').setView([currentLat, currentLng], 16);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      marker = L.marker([currentLat, currentLng], { draggable: true }).addTo(map);
+      
+      marker.on('dragend', function(e) {
+        const position = marker.getLatLng();
+        updateCoordinates(position.lat, position.lng);
+      });
+
+      map.on('click', function(e) {
+        marker.setLatLng(e.latlng);
+        updateCoordinates(e.latlng.lat, e.latlng.lng);
+      });
+    }
+
+    function updateCoordinates(lat, lng) {
+      currentLat = lat;
+      currentLng = lng;
+      document.getElementById('coordinates').textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+    }
+
+    const departmentMapping = {
+      health: { name: 'Health Department', team: 'Barangay Health Unit' },
+      fire: { name: 'Fire & Safety Department', team: 'Emergency Response Team' },
+      water: { name: 'Public Works Department', team: 'Water & Utilities Division' },
+      infrastructure: { name: 'Public Works Department', team: 'Infrastructure & Maintenance Division' },
+      traffic: { name: 'Traffic Management Office', team: 'Traffic Enforcement Unit' },
+      waste: { name: 'Sanitation Department', team: 'Waste Management Division' },
+      security: { name: 'Public Safety Office', team: 'Barangay Peacekeeping Action Team' },
+      environment: { name: 'Environment & Natural Resources Office', team: 'Environmental Protection Unit' },
+      other: { name: 'General Services Department', team: 'Public Affairs Division' }
+    };
+
+    const prioritySuggestions = {
+      health: 'High', fire: 'High', security: 'High',
+      water: 'Medium', infrastructure: 'Medium', traffic: 'Medium', waste: 'Medium',
+      environment: 'Low', other: 'Low'
+    };
+
+    document.getElementById('category').addEventListener('change', function() {
+      const category = this.value;
+      const departmentInfo = document.getElementById('departmentInfo');
+      const prioritySuggestion = document.getElementById('prioritySuggestion');
+
+      if (category && departmentMapping[category]) {
+        document.getElementById('departmentName').textContent = departmentMapping[category].name;
+        document.getElementById('responseTeam').textContent = departmentMapping[category].team;
+        departmentInfo.classList.remove('hidden');
+
+        const suggestedPriority = prioritySuggestions[category];
+        document.getElementById('suggestedPriority').textContent = suggestedPriority;
+        document.getElementById('suggestionCategory').textContent = this.options[this.selectedIndex].text;
+        prioritySuggestion.classList.remove('hidden');
+      } else {
+        departmentInfo.classList.add('hidden');
+        prioritySuggestion.classList.add('hidden');
+      }
+    });
+
+    document.getElementById('applySuggestionBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      const suggestedPriority = document.getElementById('suggestedPriority').textContent.toLowerCase();
+      document.getElementById('priority').value = suggestedPriority;
+    });
+
+    document.getElementById('photoUpload').addEventListener('change', function() {
+      const fileCount = this.files.length;
+      const fileCountText = document.getElementById('fileCount');
+      fileCountText.textContent = fileCount > 0 ? `${fileCount} file${fileCount > 1 ? 's' : ''} selected` : 'No files selected';
+    });
+
+    document.getElementById('reportForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = {
+        issueTitle: document.getElementById('issueTitle').value,
+        category: document.getElementById('category').value,
+        priority: document.getElementById('priority').value,
+        description: document.getElementById('description').value,
+        address: document.getElementById('address').value,
+        latitude: currentLat,
+        longitude: currentLng,
+        department: departmentMapping[document.getElementById('category').value]
+      };
+      console.log('Report submitted:', formData);
+      alert('Report submitted successfully!');
+      window.location.href = 'index.html';
+    });
+
+    window.addEventListener('load', initMap);
+  </script>
+</body>
+</html>
